@@ -1,0 +1,43 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: auto 20px;
+}
+
+a {
+  color: #00B7FF;
+}
+.window{
+  width: 400px;
+  height: 400px;
+  background-color: rgb(185, 185, 185);
+  border: 2px double rgb(52, 53, 52);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50% , -50%) ;
+  padding: 20px;
+}
+.input{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}
+.text_input{
+  font: normal normal 500 18px/42px Ubuntu;
+  color: #414040;
+}
+.text_button{
+  font: normal normal 500 20px/42px Ubuntu;
+  color: #ffffff;
+  background-color: #414040;
+  align-items: center;
+  margin: 29px 106px;
+}
+.text_button:hover{
+  background-color: rgb(109, 121, 102);
+}
+.text_button:active{
+  background-color: rgb(96, 231, 0);
+}

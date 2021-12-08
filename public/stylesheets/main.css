@@ -1,0 +1,6 @@
+body {
+  background-color: white; }
+  body h1 {
+    color: blue; }
+  body * {
+    margin: auto 20px; }
