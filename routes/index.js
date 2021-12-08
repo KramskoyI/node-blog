@@ -57,9 +57,9 @@ router.post('/register', async (req, res, next) => {
 });
 
 /* GET Add Posts page. */
-router.get('/addPosts', function(req, res, next) {
-  res.render('addPosts', { title: 'AddPosts' });
-});
+// router.get('/addPosts', function(req, res, next) {
+//   res.render('addPosts', { title: 'AddPosts' });
+// });
 
 /* GET Log In page. */
 router.get('/login', function(req, res, next) {
