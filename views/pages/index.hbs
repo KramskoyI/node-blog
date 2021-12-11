@@ -1,4 +1,12 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-<button>Reg</button>
-<button>LogIn</button>
+<h1>HOME</h1>
+<p>Welcome  {{ user }}</p>
+
+<form action="/logout?_method=DELETE" method="POST">
+  <button type="submit">Log Out</button>
+</form>
+
+<header>
+    <button type="submit">Reg</button>
+    <button type="submit">LogIn</button>
+</header>
+

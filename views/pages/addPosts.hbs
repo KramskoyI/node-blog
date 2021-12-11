@@ -1,12 +1,17 @@
-<form class="windows">
-            <label for="titel" class="text_input">Title:</label>
-            <input type="text" class="input_input" >
-
-            <label for="description" class="text_input">Description:</label>
-            <input type="text" class="input_input">
-
-            <label for="tag" class="text_input">Email:</label>
-            <input type="email" class="input_input">
-
-            <button class="text_button">Add Post</button>
+<h1>Create New Post</h1>
+<h2>Hi {{name}}</h2>
+<form action="/addPosts" method="POST">
+    <label for="titel" class="text_input">Title:</label>
+    <br>
+    <input type="text" name="title" id="title">
+    <br>
+    <label for="description" class="text_input">Description:</label>
+    <br>
+    <input type="text" name="description" id="description">
+    <br>
+    <label for="tag" class="text_input">Tag:</label>
+    <br>
+    <input type="text"  name="tag" id="tag">
+    <br>
+    <button type="submit">Add Post</button>
 </form>

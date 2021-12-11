@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const passport =require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
-
+const methodOverride = require('method-override')
 
 const initializePassport = require('../passport-config')
 initializePassport(
@@ -28,18 +28,19 @@ router.use(session({
 }))
 router.use(passport.initialize())
 router.use(passport.session())
+router.use(methodOverride('_method'))
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home' });
+router.get('/', checkAuthenticated, function(req, res, next) {
+  res.render('index', {user: req.user });
 });
 
 /* GET REG page. */
-router.get('/register', function(req, res, next) {
+router.get('/register', checkNotAuthenticated, function(req, res, next) {
   res.render('register', { title: 'Register' });
 });
 /* POST REG page. */
-router.post('/register', async (req, res, next) => {
+router.post('/register', checkNotAuthenticated, async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     user.push({
@@ -57,22 +58,42 @@ router.post('/register', async (req, res, next) => {
 });
 
 /* GET Add Posts page. */
-// router.get('/addPosts', function(req, res, next) {
-//   res.render('addPosts', { title: 'AddPosts' });
-// });
+router.get('/addPosts',function(req, res, next) {
+  res.render('addPosts', { title: 'addPosts' }, {name: 'fxjjjjj'} );
+});
 
 /* GET Log In page. */
-router.get('/login', function(req, res, next) {
+router.get('/login', checkNotAuthenticated, function(req, res, next) {
   res.render('login', { title: 'Login' });
 });
 /* post Log In page. */
-router.post('/login', passport.authenticate('local', {
+router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
   }
+  
 ));
 
+router.delete('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+
+  res.redirect('/login')
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
+  }
+  next()
+}
 
 
 module.exports = router;
