@@ -1,12 +1,15 @@
 <h1>HOME</h1>
 <p>Welcome  {{ user }}</p>
 
-<form action="/logout?_method=DELETE" method="POST">
-  <button type="submit">Log Out</button>
-</form>
 
-<header>
+{{#if user}}
+  <form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+  </form>
+  <a href="/addPost">Add Post</a>
+{{else}}
+  <header>
     <button type="submit">Reg</button>
     <button type="submit">LogIn</button>
-</header>
-
+  </header>
+{{/if}}

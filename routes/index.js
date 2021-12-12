@@ -9,15 +9,19 @@ const passport =require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-
+const fs = require('fs')
+var path = require('path');
 const initializePassport = require('../passport-config')
+const usersBase = path.join(__dirname, 'db/users.json')
+const postsBase = path.join(__dirname, 'db/posts.json')
+const usersBuffer = fs.readFileSync('db/users.json');
+const users = JSON.parse(usersBuffer.toString());
 initializePassport(
   passport, 
-  email => user.find(user => user.email === email),
-  id => user.find(user => user.id === id),
+  email => users.find(user => user.email === email),
+  id => users.find(user => user.id === id),
 )
-
-const user = [];
+ 
 
 router.use(express.urlencoded({extended: false}));
 router.use(flash())
@@ -32,7 +36,7 @@ router.use(methodOverride('_method'))
 
 /* GET home page. */
 router.get('/', checkAuthenticated, function(req, res, next) {
-  res.render('index', {user: req.user });
+  res.render('index', {user: req.user.name });
 });
 
 /* GET REG page. */
@@ -43,23 +47,37 @@ router.get('/register', checkNotAuthenticated, function(req, res, next) {
 router.post('/register', checkNotAuthenticated, async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    user.push({
+    function getUsers() {
+      try {
+        const usersBuffer = fs.readFileSync('db/users.json');
+        return JSON.parse(usersBuffer.toString());
+      } catch (err) {
+        return [];
+      }
+    }
+
+    const users = getUsers()
+
+    let user = {
       id: Date.now().toString(),
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
       password: hashedPassword,
-    })
+    }
+    users.push(user)
+    fs.writeFileSync('db/users.json', JSON.stringify(users));
+
     res.redirect('/login')
   } catch {
     res.redirect('/register')
   }
-  console.log(user)
+  
 });
 
 /* GET Add Posts page. */
-router.get('/addPosts',function(req, res, next) {
-  res.render('addPosts', { title: 'addPosts' }, {name: 'fxjjjjj'} );
+router.get('/addPost',function(req, res, next) {
+  res.render('addPost', { title: 'addPost' });
 });
 
 /* GET Log In page. */
@@ -69,7 +87,7 @@ router.get('/login', checkNotAuthenticated, function(req, res, next) {
 /* post Log In page. */
 router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/login',
+  failureRedirect: '/',
   failureFlash: true
   }
   
@@ -77,7 +95,7 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 
 router.delete('/logout', (req, res) => {
   req.logOut()
-  res.redirect('/login')
+  res.redirect('/')
 })
 
 function checkAuthenticated(req, res, next) {

@@ -1,9 +1,14 @@
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
+const fs = require('fs')
+var path = require('path');
+const usersBase = path.join(__dirname, 'db/users.json')
 
 function initialize(passport, getUserByEmail, getUserById) {
   const authenticateUser = async (email, password, done) => {
+    
     const user = getUserByEmail(email)
+    
     if (user == null) {
       return done(null, false, { message: 'No user with that email' })
     }
