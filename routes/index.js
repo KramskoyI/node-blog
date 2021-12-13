@@ -15,7 +15,9 @@ const initializePassport = require('../passport-config')
 const usersBase = path.join(__dirname, 'db/users.json')
 const postsBase = path.join(__dirname, 'db/posts.json')
 const usersBuffer = fs.readFileSync('db/users.json');
+const postsBuffer = fs.readFileSync('db/posts.json');
 const users = JSON.parse(usersBuffer.toString());
+const posts = JSON.parse(postsBuffer.toString());
 initializePassport(
   passport, 
   email => users.find(user => user.email === email),
@@ -79,6 +81,38 @@ router.post('/register', checkNotAuthenticated, async (req, res, next) => {
 router.get('/addPost',function(req, res, next) {
   res.render('addPost', { title: 'addPost' });
 });
+
+/* POST Add Posts page. */
+router.post('/addPost',function(req, res, next) {
+  try {
+    
+    function getPosts() {
+      try {
+        const postsBuffer = fs.readFileSync('db/posts.json');
+        return JSON.parse(postsBuffer.toString());
+      } catch (err) {
+        return [];
+      }
+    }
+
+    const posts = getPosts()
+
+    let post = {
+      
+      title: req.body.title,
+      description: req.body.description,
+      tag: req.body.tag,
+      
+    }
+    posts.push(post)
+    fs.writeFileSync('db/posts.json', JSON.stringify(posts));
+    console.log(post)
+    res.redirect('/')
+  } catch {
+    res.redirect('/login')
+  }
+});
+
 
 /* GET Log In page. */
 router.get('/login', checkNotAuthenticated, function(req, res, next) {
