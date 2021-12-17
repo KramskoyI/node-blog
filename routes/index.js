@@ -38,7 +38,7 @@ router.use(methodOverride('_method'))
 
 /* GET home page. */
 router.get('/', checkAuthenticated, function(req, res, next) {
-  res.render('index', {user: req.user.name });
+  res.render('index', {user: req.user.name, posts }, );
 });
 
 /* GET REG page. */
@@ -98,7 +98,8 @@ router.post('/addPost',function(req, res, next) {
     const posts = getPosts()
 
     let post = {
-      
+      id: Date.now(),
+      idAutor: req.user.id,
       title: req.body.title,
       description: req.body.description,
       tag: req.body.tag,
@@ -126,6 +127,20 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   }
   
 ));
+/* GET Read Post page. */
+router.get('/readPost', function(req, res, next) {
+  
+  let id = req.query.id;
+  let post = posts.find(post => post.id == id)
+  id = Number(id)
+  post.date  = new Date(id)
+  
+  let user = users.find(user => user.id == post.idAutor)
+  post.autor = user.name + user.lastName
+  console.log(post, user)
+
+  res.render('readPost', post)
+})
 
 router.delete('/logout', (req, res) => {
   req.logOut()

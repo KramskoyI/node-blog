@@ -13,3 +13,24 @@
     <button type="submit">LogIn</button>
   </header>
 {{/if}}
+<div class="posts">
+  
+  {{#each posts}}
+    <div class="post_card">
+        
+      {{#if image}}
+        <img src="/images/{{image}}" alt="">
+      {{else}}
+        <img src="https://via.placeholder.com/100x100/258DC8/E0F6FD" alt="">
+      {{/if}}
+      <h2> {{title}}</h2>
+      <p>{{description}}</p>
+      <div >
+        <button type="button" ><a href="/readPost?id={{id}}"> Read Post </a></button>
+        <small >{{tag}}</small>
+      </div>
+        
+    </div>
+  {{/each}}
+  
+</div> 
