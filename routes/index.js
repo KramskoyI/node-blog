@@ -11,6 +11,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const fs = require('fs')
 var path = require('path');
+const multer = require('multer');
 const initializePassport = require('../passport-config')
 const usersBase = path.join(__dirname, 'db/users.json')
 const postsBase = path.join(__dirname, 'db/posts.json')
@@ -23,9 +24,21 @@ initializePassport(
   email => users.find(user => user.email === email),
   id => users.find(user => user.id === id),
 )
- 
 
-router.use(express.urlencoded({extended: false}));
+
+const imagesBase = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'db/images') 
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+});
+const upload = multer({storage: imagesBase});
+
+router.use(express.static(__dirname + 'db'))
+router.use(multer({storage:imagesBase}).single('filedata'));
+router.use(express.urlencoded({extended: false}))
 router.use(flash())
 router.use(session({
   secret: process.env.SESSION_SECRET,
@@ -37,7 +50,26 @@ router.use(passport.session())
 router.use(methodOverride('_method'))
 
 /* GET home page. */
-router.get('/', checkAuthenticated, function(req, res, next) {
+router.get('/',  checkAuthenticated, function(req, res, next) {
+  function getPosts() {
+    try {
+      const postsBuffer = fs.readFileSync('db/posts.json');
+      return JSON.parse(postsBuffer.toString());
+    } catch (err) {
+      return [];
+    }
+  }
+
+  let posts = getPosts()
+  let allPosts = posts.map(function(post){
+    let user = users.find(user => user.id == post.idAutor)
+    post.autor = user.name + user.lastName
+    let id = post.id;
+    id = Number(id)
+    let date = new Date(id)
+    post.date  = date.toDateString()
+  })
+  
   res.render('index', {user: req.user.name, posts }, );
 });
 
@@ -83,7 +115,7 @@ router.get('/addPost',function(req, res, next) {
 });
 
 /* POST Add Posts page. */
-router.post('/addPost',function(req, res, next) {
+router.post('/addPost', function(req, res, next) {
   try {
     
     function getPosts() {
@@ -96,14 +128,22 @@ router.post('/addPost',function(req, res, next) {
     }
 
     const posts = getPosts()
-
+   
+    let filedata  = req.file ? req.file.filename : null
+    
+    // if(filedata != ''){
+    //   post.image = filedata
+    // } else{
+    //   delete post.image
+    // }
+    
     let post = {
       id: Date.now(),
       idAutor: req.user.id,
       title: req.body.title,
       description: req.body.description,
       tag: req.body.tag,
-      
+      image: filedata
     }
     posts.push(post)
     fs.writeFileSync('db/posts.json', JSON.stringify(posts));
@@ -133,7 +173,8 @@ router.get('/readPost', function(req, res, next) {
   let id = req.query.id;
   let post = posts.find(post => post.id == id)
   id = Number(id)
-  post.date  = new Date(id)
+  let date = new Date(id)
+  post.date  = date.toDateString()
   
   let user = users.find(user => user.id == post.idAutor)
   post.autor = user.name + user.lastName

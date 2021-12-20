@@ -6,7 +6,12 @@ body {
     margin: auto 20px; }
   body .posts {
     display: flex;
-    width: 40%;
+    width: 60%;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    margin: auto;
+    gap: 20px; }
+  body .post_card {
+    display: flex;
+    flex-direction: column; }
