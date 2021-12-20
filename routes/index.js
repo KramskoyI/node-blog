@@ -25,7 +25,7 @@ initializePassport(
   id => users.find(user => user.id === id),
 )
 
-
+router.use(express.static(__dirname + 'db'))
 const imagesBase = multer.diskStorage({
   destination: (req, file, cb) => {
       cb(null, 'db/images') 
@@ -36,7 +36,7 @@ const imagesBase = multer.diskStorage({
 });
 const upload = multer({storage: imagesBase});
 
-router.use(express.static(__dirname + 'db'))
+
 router.use(multer({storage:imagesBase}).single('filedata'));
 router.use(express.urlencoded({extended: false}))
 router.use(flash())
@@ -69,8 +69,21 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
     let date = new Date(id)
     post.date  = date.toDateString()
   })
+  const postsOnPage = 2
+  const pageAll = Math.ceil(posts.length / postsOnPage)
+  const pages = []
   
-  res.render('index', {user: req.user.name, posts }, );
+  for (let i = 1; i <= pageAll; i++) {
+    const page = { page: i}
+    pages.push(page)
+  }
+  let page = 1
+  let test = req.query.page
+  if(test > page){
+    page = test
+  }
+  posts = posts.slice((page-1) * postsOnPage , page * postsOnPage)
+  res.render('index', {user: req.user.name, posts, pages });
 });
 
 /* GET REG page. */
@@ -130,12 +143,6 @@ router.post('/addPost', function(req, res, next) {
     const posts = getPosts()
    
     let filedata  = req.file ? req.file.filename : null
-    
-    // if(filedata != ''){
-    //   post.image = filedata
-    // } else{
-    //   delete post.image
-    // }
     
     let post = {
       id: Date.now(),
