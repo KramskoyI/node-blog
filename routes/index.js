@@ -28,7 +28,7 @@ initializePassport(
 router.use(express.static(__dirname + 'db'))
 const imagesBase = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, 'db/images') 
+      cb(null, 'public/images') 
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname)
