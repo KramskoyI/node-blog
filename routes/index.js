@@ -61,6 +61,8 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   }
 
   let posts = getPosts()
+  
+  
   let allPosts = posts.map(function(post){
     let user = users.find(user => user.id == post.idAutor)
     post.autor = user.name + user.lastName
@@ -69,8 +71,25 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
     let date = new Date(id)
     post.date  = date.toDateString()
   })
+  const tag = req.query.tag
+
+  let postsTag 
+
+  if(tag !=''){
+    postsTag = posts.filter(post => post.tag === tag)
+  }
   const postsOnPage = 2
-  const pageAll = Math.ceil(posts.length / postsOnPage)
+
+  let pageAll
+  
+  if( postsTag.length > 0){
+    pageAll = Math.ceil(postsTag.length / postsOnPage)
+  } else{
+    pageAll = Math.ceil(posts.length / postsOnPage)
+  }
+  console.log("=====================>>>",postsTag.length)
+ 
+  // let pageAll = Math.ceil(posts.length / postsOnPage) 
   const pages = []
   
   for (let i = 1; i <= pageAll; i++) {
@@ -83,8 +102,11 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
     page = test
   }
   posts = posts.slice((page-1) * postsOnPage , page * postsOnPage)
-  res.render('index', {user: req.user.name, posts, pages });
-});
+  postsT = postsTag.slice((page-1) * postsOnPage , page * postsOnPage)
+  console.log("======>>>",page,"======>>>",postsTag.length, postsT.length)
+  res.render('index', {user: req.user.name, posts, postsT, pages, tag})
+  
+})
 
 /* GET REG page. */
 router.get('/register', checkNotAuthenticated, function(req, res, next) {

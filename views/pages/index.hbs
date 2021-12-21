@@ -13,30 +13,59 @@
     <button type="submit">LogIn</button>
   </header>
 {{/if}}
+
+
 <div class="posts">
   
-  {{#each posts}}
-    <div class="post_card">
-        
-      {{#if image}}
-        <img src="/images/{{image}}" alt="" width="200" height="200">
-      {{else}}
-        <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
-      {{/if}}
-      <h2> {{title}}</h2>
-      <p>Description:{{description}}</p>
-      <p>Autor:{{autor}}</p>
-      <p>Date:{{date}}</p>
-      <div >
-        <button type="button" ><a href="/readPost?id={{id}}"> Read Post </a></button>
-        <br>
-        <small >Tag:{{tag}}</small>
+  {{#if tag}}
+
+    {{#each postsT}}
+      <div class="post_card">
+          
+        {{#if image}}
+          <img src="/images/{{image}}" alt="" width="200" height="200">
+        {{else}}
+          <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
+        {{/if}}
+        <h2> {{title}}</h2>
+        <p>Description:{{description}}</p>
+        <p>Autor:{{autor}}</p>
+        <p>Date:{{date}}</p>
+        <div >
+          <button type="button" ><a href="/readPost?id={{id}}"> Read Post </a></button>
+          <br>
+          <button type="button" ><a href="/?tag={{tag}}"> {{tag}} </a></button>
+        </div>
+          
       </div>
-        
-    </div>
-  {{/each}}
-  
+    {{/each}}
+
+  {{else}}
+
+      {{#each posts}}
+      <div class="post_card">
+          
+        {{#if image}}
+          <img src="/images/{{image}}" alt="" width="200" height="200">
+        {{else}}
+          <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
+        {{/if}}
+        <h2> {{title}}</h2>
+        <p>Description:{{description}}</p>
+        <p>Autor:{{autor}}</p>
+        <p>Date:{{date}}</p>
+        <div >
+          <button type="button" ><a href="/readPost?id={{id}}"> Read Post </a></button>
+          <br>
+          <span>Tag: <a href="/?tag={{tag}}"> {{tag}} </a> </span> 
+        </div>
+      </div>
+      {{/each}}
+
+  {{/if}}
+
 </div> 
+
 <div class="paginatContainer">
   {{#each pages}}
   <a href="/?page={{page}}"  id="navLink"> {{page}}</a>
