@@ -78,7 +78,7 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   if(tag !=''){
     postsTag = posts.filter(post => post.tag === tag)
   }
-  const postsOnPage = 2
+  const postsOnPage = 6
 
   let pageAll
   
@@ -87,7 +87,7 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   } else{
     pageAll = Math.ceil(posts.length / postsOnPage)
   }
-  console.log("=====================>>>",postsTag.length)
+  console.log("=====================>>>", "tag>>>",tag, postsTag.length)
  
   // let pageAll = Math.ceil(posts.length / postsOnPage) 
   const pages = []
@@ -103,7 +103,7 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   }
   posts = posts.slice((page-1) * postsOnPage , page * postsOnPage)
   postsT = postsTag.slice((page-1) * postsOnPage , page * postsOnPage)
-  console.log("======>>>",page,"======>>>",postsTag.length, postsT.length)
+  console.log("======>>>",page,"======>>>",postsTag.length, postsT.length, "tag>>>",tag)
   res.render('index', {user: req.user.name, posts, postsT, pages, tag})
   
 })

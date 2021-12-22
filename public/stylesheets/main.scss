@@ -4,20 +4,73 @@ body {
         color: blue;
     }
     *{
-        margin: auto 20px;
+        margin: auto 0px;
     }
     .posts{
         display: flex;
-        width: 60%;
+        width:1600px;
         justify-content: center;
         align-items: center;
-        flex-wrap: wrap;
-        margin: auto;
+        flex-wrap: nowrap;
+        margin: 20px auto;
         gap: 20px;
     }
     .post_card{
         display: flex;
+        width: 220px;
         flex-direction: column;
-        
+        background-color: rgb(238, 240, 241);
+        text-align: center;
+        padding:  10px 10px;
+    }
+    .login_head{
+        width: 100%;
+        background-color: rgb(167, 167, 167);
+        text-align: center;
+        color: rgb(253, 253, 253);
+    }
+    .login_windows{
+        display: flex;
+        margin: 40px auto;
+        gap: 10px;
+        flex-direction: column;
+        width: 30%;
+    }
+    .button_login{
+        width: 20%;
+    }
+    a{
+        text-decoration: none; 
+        color: #000;
+    }
+    .welcom{
+        width: 100%;
+        font-size: 20px;
+        color: rgb(59, 59, 59);
+        background-color: rgb(208, 209, 209);
+        text-align: center;
+    }
+    .user{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .user_button{
+        display: flex;
+        flex-direction: row;
+
+    }
+    
+    .paginatContainer{
+        margin: 20px auto;
+        background-color: rgb(184, 184, 184);
+        text-align: center;
+    }
+    .pag_page{
+        font-size: 20px;
+        color: rgb(255, 254, 254);
+    }
+    .pag_page:hover{
+        color: #000;
     }
 }

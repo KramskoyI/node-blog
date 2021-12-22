@@ -3,15 +3,57 @@ body {
   body h1 {
     color: blue; }
   body * {
-    margin: auto 20px; }
+    margin: auto 0px; }
   body .posts {
     display: flex;
-    width: 60%;
+    width: 1600px;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    margin: auto;
+    flex-wrap: nowrap;
+    margin: 20px auto;
     gap: 20px; }
   body .post_card {
     display: flex;
+    width: 220px;
+    flex-direction: column;
+    background-color: #eef0f1;
+    text-align: center;
+    padding: 10px 10px; }
+  body .login_head {
+    width: 100%;
+    background-color: #a7a7a7;
+    text-align: center;
+    color: #fdfdfd; }
+  body .login_windows {
+    display: flex;
+    margin: 40px auto;
+    gap: 10px;
+    flex-direction: column;
+    width: 30%; }
+  body .button_login {
+    width: 20%; }
+  body a {
+    text-decoration: none;
+    color: #000; }
+  body .welcom {
+    width: 100%;
+    font-size: 20px;
+    color: #3b3b3b;
+    background-color: #d0d1d1;
+    text-align: center; }
+  body .user {
+    display: flex;
+    justify-content: center;
     flex-direction: column; }
+  body .user_button {
+    display: flex;
+    flex-direction: row; }
+  body .paginatContainer {
+    margin: 20px auto;
+    background-color: #b8b8b8;
+    text-align: center; }
+  body .pag_page {
+    font-size: 20px;
+    color: #fffefe; }
+  body .pag_page:hover {
+    color: #000; }

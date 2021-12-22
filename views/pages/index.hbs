@@ -1,14 +1,20 @@
-<h1>HOME</h1>
-<p>Welcome  {{ user }}</p>
+
 
 
 {{#if user}}
-  <form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-  </form>
-  <a href="/addPost">Add Post</a>
+<div class="user">
+  <h1 class="login_head">World Of Books</h1>
+  <p class="welcom">Welcome  {{ user }}</p>
+  <div class="user_button">
+    <form action="/logout?_method=DELETE" method="POST">
+      <button type="submit" class="button_user">Log Out</button>
+    </form>
+    <button class="button_user"><a href="/addPost">Add Post </a></button>
+  </div>
+</div>
 {{else}}
   <header>
+    <h1 class="login_head">World Of Books</h1>
     <button type="submit">Reg</button>
     <button type="submit">LogIn</button>
   </header>
@@ -23,7 +29,7 @@
       <div class="post_card">
           
         {{#if image}}
-          <img src="/images/{{image}}" alt="" width="200" height="200">
+          <img src="/images/{{image}}" alt="" width="200" height="300" class="img">
         {{else}}
           <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
         {{/if}}
@@ -68,6 +74,6 @@
 
 <div class="paginatContainer">
   {{#each pages}}
-  <a href="/?page={{page}}"  id="navLink"> {{page}}</a>
+  <a href="/?page={{page}}"  id="navLink" class="pag_page"> {{page}}</a>
   {{/each}}
 </div>
