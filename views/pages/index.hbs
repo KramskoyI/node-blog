@@ -3,20 +3,21 @@
 
 {{#if user}}
 <div class="user">
-  <h1 class="login_head">World Of Books</h1>
+  <h1 class="login_head">Books Blog</h1>
   <p class="welcom">Welcome  {{ user }}</p>
   <div class="user_button">
     <form action="/logout?_method=DELETE" method="POST">
-      <button type="submit" class="button_user">Log Out</button>
+      <button type="submit" class="btn btn-secondary">Log Out</button>
     </form>
-    <button class="button_user"><a href="/addPost">Add Post </a></button>
+    <button class="btn btn-secondary"><a href="/addPost">Add Post </a></button>
+    <button type="submit" class="btn btn-secondary"><a href="/">Home </a></button>
   </div>
 </div>
 {{else}}
   <header>
-    <h1 class="login_head">World Of Books</h1>
-    <button type="submit">Reg</button>
-    <button type="submit">LogIn</button>
+    <h1 class="login_head">Books Blog</h1>
+    <button type="submit" class="btn btn-secondary"><a href="/register">Register </a></button>
+    <button type="submit" class="btn btn-secondary"><a href="/">Home </a></button>
   </header>
 {{/if}}
 
@@ -24,8 +25,9 @@
 <div class="posts">
   
   {{#if tag}}
-
+  
     {{#each postsT}}
+      
       <div class="post_card">
           
         {{#if image}}
@@ -34,16 +36,17 @@
           <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
         {{/if}}
         <h2> {{title}}</h2>
-        <p>Description:{{description}}</p>
+        <p class="description" maxlength="10"> Description:{{description}}</p>
         <p>Autor:{{autor}}</p>
         <p>Date:{{date}}</p>
         <div >
-          <button type="button" ><a href="/readPost?id={{id}}"> Read Post </a></button>
+          <button type="button" class="btn btn-secondary"><a href="/readPost?id={{id}}"> Read Post </a></button>
           <br>
-          <button type="button" ><a href="/?tag={{tag}}"> {{tag}} </a></button>
+          <p> {{tag}} </p>
         </div>
-          
+        
       </div>
+      
     {{/each}}
 
   {{else}}
@@ -57,11 +60,11 @@
           <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
         {{/if}}
         <h2> {{title}}</h2>
-        <p>Description:{{description}}</p>
+        <p class="description" maxlength="10" >Description:{{description}}</p>
         <p>Autor:{{autor}}</p>
         <p>Date:{{date}}</p>
         <div >
-          <button type="button" ><a href="/readPost?id={{id}}"> Read Post </a></button>
+          <button type="button" class="btn btn-secondary"><a href="/readPost?id={{id}}"> Read Post </a></button>
           <br>
           <span>Tag: <a href="/?tag={{tag}}"> {{tag}} </a> </span> 
         </div>

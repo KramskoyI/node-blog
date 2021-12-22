@@ -6,19 +6,20 @@ body {
     margin: auto 0px; }
   body .posts {
     display: flex;
-    width: 1600px;
+    width: 100;
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
-    margin: 20px auto;
+    margin: 30px auto;
     gap: 20px; }
   body .post_card {
     display: flex;
     width: 220px;
     flex-direction: column;
-    background-color: #eef0f1;
+    background-color: #cdd0d1;
     text-align: center;
-    padding: 10px 10px; }
+    padding: 10px 10px;
+    border-radius: 5px; }
   body .login_head {
     width: 100%;
     background-color: #a7a7a7;
@@ -31,10 +32,13 @@ body {
     flex-direction: column;
     width: 30%; }
   body .button_login {
+    border-radius: 3px;
     width: 20%; }
   body a {
     text-decoration: none;
     color: #000; }
+  body a:hover {
+    color: #fff6f6; }
   body .welcom {
     width: 100%;
     font-size: 20px;
@@ -46,8 +50,11 @@ body {
     justify-content: center;
     flex-direction: column; }
   body .user_button {
+    margin: 30px 10px;
     display: flex;
-    flex-direction: row; }
+    flex-direction: row;
+    border-radius: 3px;
+    gap: 10px; }
   body .paginatContainer {
     margin: 20px auto;
     background-color: #b8b8b8;
@@ -57,3 +64,40 @@ body {
     color: #fffefe; }
   body .pag_page:hover {
     color: #000; }
+  body .post_add {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin: 40px auto;
+    gap: 10px; }
+  body .input {
+    width: 300px; }
+  body .description {
+    text-overflow: ellipsis;
+    height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 200px; }
+  body .read_window {
+    width: 50%;
+    padding: 10px 20px;
+    margin: 0px auto;
+    background-color: #a5a5a5;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px; }
+  body .read_text {
+    width: 100%;
+    align-self: start;
+    background-color: #e0e0e0;
+    border-radius: 5px; }
+  body .login_buttons {
+    width: 80px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column; }
