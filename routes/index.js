@@ -10,11 +10,8 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const fs = require('fs')
-// const path = require('path');
 const multer = require('multer');
 const initializePassport = require('../passport-config')
-// const usersBase = path.join(__dirname, 'db/users.json')
-// const postsBase = path.join(__dirname, 'db/posts.json')
 const usersBuffer = fs.readFileSync('db/users.json');
 const postsBuffer = fs.readFileSync('db/posts.json');
 const users = JSON.parse(usersBuffer.toString());
@@ -91,23 +88,6 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   
 })
 
-
-/* GET Read Post page. */
-router.get('/readPost', function(req, res, next) {
-  
-  let id = req.query.id;
-  let post = posts.find(post => post.id == id)
-  id = Number(id)
-  let date = new Date(id)
-  post.date  = date.toDateString()
-  
-  let user = users.find(user => user.id == post.idAutor)
-  post.autor = user.name + user.lastName
-  console.log(post, user)
-
-  res.render('readPost', post)
-})
-
 router.delete('/logout', (req, res) => {
   req.logOut()
   res.redirect('/')
@@ -120,13 +100,5 @@ function checkAuthenticated(req, res, next) {
 
   res.redirect('/login')
 }
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/')
-  }
-  next()
-}
-
 
 module.exports = router;
