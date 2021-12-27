@@ -12,7 +12,7 @@ function checkNotAuthenticated(req, res, next) {
       return res.redirect('/')
     }
     next()
-  }
+}
 /* GET REG page. */
 router.get('/register', checkNotAuthenticated, function(req, res, next) {
     res.render('register', { title: 'Register' });

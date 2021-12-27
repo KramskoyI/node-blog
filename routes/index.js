@@ -144,19 +144,6 @@ router.post('/addPost', function(req, res, next) {
   }
 });
 
-
-/* GET Log In page. */
-router.get('/login', checkNotAuthenticated, function(req, res, next) {
-  res.render('login', { title: 'Login' });
-});
-/* post Log In page. */
-router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/',
-  failureFlash: true
-  }
-  
-));
 /* GET Read Post page. */
 router.get('/readPost', function(req, res, next) {
   
