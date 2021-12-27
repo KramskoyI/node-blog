@@ -10,7 +10,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const fs = require('fs')
-var path = require('path');
+const path = require('path');
 const multer = require('multer');
 const initializePassport = require('../passport-config')
 const usersBase = path.join(__dirname, 'db/users.json')
@@ -87,9 +87,6 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   } else{
     pageAll = Math.ceil(posts.length / postsOnPage)
   }
-  console.log("=====================>>>", "tag>>>",tag, postsTag.length)
- 
-  // let pageAll = Math.ceil(posts.length / postsOnPage) 
   const pages = []
   
   for (let i = 1; i <= pageAll; i++) {
@@ -103,46 +100,10 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   }
   posts = posts.slice((page-1) * postsOnPage , page * postsOnPage)
   postsT = postsTag.slice((page-1) * postsOnPage , page * postsOnPage)
-  console.log("======>>>",page,"======>>>",postsTag.length, postsT.length, "tag>>>",tag)
   res.render('index', {user: req.user.name, posts, postsT, pages, tag})
   
 })
 
-/* GET REG page. */
-router.get('/register', checkNotAuthenticated, function(req, res, next) {
-  res.render('register', { title: 'Register' });
-});
-/* POST REG page. */
-router.post('/register', checkNotAuthenticated, async (req, res, next) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    function getUsers() {
-      try {
-        const usersBuffer = fs.readFileSync('db/users.json');
-        return JSON.parse(usersBuffer.toString());
-      } catch (err) {
-        return [];
-      }
-    }
-
-    const users = getUsers()
-
-    let user = {
-      id: Date.now().toString(),
-      name: req.body.name,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: hashedPassword,
-    }
-    users.push(user)
-    fs.writeFileSync('db/users.json', JSON.stringify(users));
-
-    res.redirect('/login')
-  } catch {
-    res.redirect('/register')
-  }
-  
-});
 
 /* GET Add Posts page. */
 router.get('/addPost',function(req, res, next) {
