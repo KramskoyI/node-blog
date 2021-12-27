@@ -10,17 +10,16 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const fs = require('fs')
-const multer = require('multer');
 const initializePassport = require('../passport-config')
-const usersBuffer = fs.readFileSync('db/users.json');
-const postsBuffer = fs.readFileSync('db/posts.json');
-const users = JSON.parse(usersBuffer.toString());
-const posts = JSON.parse(postsBuffer.toString());
+const usersBuffer = fs.readFileSync('db/users.json')
+const users = JSON.parse(usersBuffer.toString())
+
 initializePassport(
   passport, 
   email => users.find(user => user.email === email),
   id => users.find(user => user.id === id),
 )
+
 router.use(express.static(__dirname + 'db'))
 router.use(express.urlencoded({extended: false}))
 router.use(flash())
