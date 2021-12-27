@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const fs = require('fs')
-const path = require('path')
+// const path = require('path')
 const multer = require('multer')
-const postsBase = path.join(__dirname, 'db/posts.json')
-const postsBuffer = fs.readFileSync('db/posts.json')
-const posts = JSON.parse(postsBuffer.toString())
+// const postsBase = path.join(__dirname, 'db/posts.json')
+// const postsBuffer = fs.readFileSync('db/posts.json')
+// const posts = JSON.parse(postsBuffer.toString())
 const imagesBase = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/images') 

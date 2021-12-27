@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const fs = require('fs')
-const path = require('path')
-const usersBase = path.join(__dirname, 'db/users.json')
-const usersBuffer = fs.readFileSync('db/users.json')
-const users = JSON.parse(usersBuffer.toString());
+// const path = require('path')
+// const usersBase = path.join(__dirname, 'db/users.json')
+// const usersBuffer = fs.readFileSync('db/users.json')
+// const users = JSON.parse(usersBuffer.toString());
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
