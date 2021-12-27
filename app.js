@@ -3,9 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
 const indexRouter = require('./routes/index');
-
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const addPostRouter = require('./routes/addPost');
@@ -23,7 +21,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-
 app.get('/register', registerRouter);
 app.post('/register', registerRouter);
 app.get('/login', loginRouter);
