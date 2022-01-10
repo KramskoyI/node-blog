@@ -5,9 +5,9 @@ const usersBuffer = fs.readFileSync('db/users.json');
 const postsBuffer = fs.readFileSync('db/posts.json');
 const users = JSON.parse(usersBuffer.toString());
 const posts = JSON.parse(postsBuffer.toString());
+
 /* GET Read Post page. */
 router.get('/readPost', function(req, res, next) {
-  
     let id = req.query.id;
     let post = posts.find(post => post.id == id)
     id = Number(id)

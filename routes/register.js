@@ -2,23 +2,28 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const fs = require('fs')
-// const path = require('path')
-// const usersBase = path.join(__dirname, 'db/users.json')
-// const usersBuffer = fs.readFileSync('db/users.json')
-// const users = JSON.parse(usersBuffer.toString());
+const path = require('path')
+const usersBase = path.join(__dirname, 'db/users.json')
+const usersBuffer = fs.readFileSync('db/users.json')
+const users = JSON.parse(usersBuffer.toString());
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return res.redirect('/')
-    }
-    next()
-}
+// function checkNotAuthenticated(req, res, next) {
+    
+//     next()
+// }
 /* GET REG page. */
-router.get('/register', checkNotAuthenticated, function(req, res, next) {
+router.get('/register', function(req, res, next) {
+  // , checkNotAuthenticated,
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
+  } else {
     res.render('register', { title: 'Register' });
+  }
+    
 });
 /* POST REG page. */
-router.post('/register', checkNotAuthenticated, async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
+  // , checkNotAuthenticated
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10)
       function getUsers() {

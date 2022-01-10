@@ -6,7 +6,7 @@
     
     "start": "concurrently \"npm:watch-node\" \"npm:sass\"",
     "sass": "node-sass --watch ./public/stylesheets/main.scss ./public/stylesheets/main.css",
-    "watch-node": "nodemon ./bin/www --ext js"
+    "watch-node": "nodemon ./bin/www --ext js,json"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

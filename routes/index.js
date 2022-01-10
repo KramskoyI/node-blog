@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const router = express.Router();
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const passport =require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
@@ -33,7 +33,8 @@ router.use(passport.session())
 router.use(methodOverride('_method'))
 
 /* GET home page. */
-router.get('/',  checkAuthenticated, function(req, res, next) {
+router.get('/', function(req, res, next) {
+  // , checkAuthenticated
   function getPosts() {
     try {
       const postsBuffer = fs.readFileSync('db/posts.json');
@@ -83,7 +84,13 @@ router.get('/',  checkAuthenticated, function(req, res, next) {
   }
   posts = posts.slice((page-1) * postsOnPage , page * postsOnPage)
   postsT = postsTag.slice((page-1) * postsOnPage , page * postsOnPage)
-  res.render('index', {user: req.user.name, posts, postsT, pages, tag})
+  if (req.isAuthenticated()) {
+    res.render('index', { user: req.user.name ,posts, postsT, pages, tag})
+  } else {
+    res.render('index', { posts, postsT, pages, tag})
+  }
+  
+  // user: req.user.name ,
   
 })
 
@@ -93,9 +100,7 @@ router.delete('/logout', (req, res) => {
 })
 
 function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next()
-  }
+  
 
   res.redirect('/login')
 }

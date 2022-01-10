@@ -9,15 +9,21 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 /* GET Log In page. */
-router.get('/login', checkNotAuthenticated, function(req, res, next) {
-    res.render('login', { title: 'Login' });
+router.get('/login', function(req, res, next) {
+    // , checkNotAuthenticated
+    if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        res.render('login', { title: 'Login' });
+    }
 });
-router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
+    // , checkNotAuthenticated,
+    
     successRedirect: '/',
     failureRedirect: '/',
     failureFlash: true
     }
-    
 ));
 
 module.exports = router;
