@@ -1,6 +1,10 @@
 <h1 class="login_head">Create New Post</h1>
 
-<form action="/addPost" method="POST"  enctype="multipart/form-data" class="post_add">
+{{#if errorAdd }}
+    <div class="erDiv">
+        <p class="errorAdd">{{errorAdd}}</p>
+    </div>
+    <form action="/addPost" method="POST"  enctype="multipart/form-data" class="post_add">
 
     <label for="titel" >Title:</label>
     
@@ -18,4 +22,31 @@
     
     <button type="submit" class="btn btn-secondary">Add Post</button>
 
-</form>
+    </form>
+
+    {{else}}
+
+    <form action="/addPost" method="POST"  enctype="multipart/form-data" class="post_add">
+
+    <label for="titel" >Title:</label>
+    
+    <input type="text" name="title" id="title" class="input">
+    
+    <label for="description" class="text_input">Description:</label>
+    
+    <input type="text" name="description" id="description" class="input">
+    
+    <label for="tag" class="text_input">Tag:</label>
+    
+    <input type="text"  name="tag" id="tag" class="input" >
+    
+    <input type="file" name="filedata">
+    
+    <button type="submit" class="btn btn-secondary">Add Post</button>
+
+    </form>
+
+{{/if}}
+
+
+

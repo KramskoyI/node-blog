@@ -37,19 +37,29 @@ router.post('/addPost', function(req, res, next) {
       const posts = getPosts()
      
       let filedata  = req.file ? req.file.filename : null
+
+      const tags = req.body.tag
+      const arrTags = tags.split(',');
+
       
       let post = {
         id: Date.now(),
         idAutor: req.user.id,
         title: req.body.title,
         description: req.body.description,
-        tag: req.body.tag,
+        tag: arrTags,
         image: filedata
       }
-      posts.push(post)
-      fs.writeFileSync('db/posts.json', JSON.stringify(posts));
-      console.log(post)
-      res.redirect('/')
+      if (post.title === ''|| post.description === '') {
+        console.log("=========================")
+        res.render('addPost', { errorAdd : 'You did not write Title or Description!!!'})
+        
+      } else {
+        console.log('========>>', post)
+        posts.push(post)
+        fs.writeFileSync('db/posts.json', JSON.stringify(posts));
+        res.redirect('/')
+      }
     } catch {
       res.redirect('/login')
     }

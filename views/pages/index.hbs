@@ -32,9 +32,9 @@
       <div class="post_card">
           
         {{#if image}}
-          <img src="/images/{{image}}" alt="" width="200" height="300" class="img">
+          <img src="/images/{{image}}" class="img">
         {{else}}
-          <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
+          <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="" >
         {{/if}}
         <h2> {{title}}</h2>
         <p class="description" maxlength="10"> Description:{{description}}</p>
@@ -43,7 +43,11 @@
         <div >
           <button type="button" class="btn btn-secondary"><a href="/readPost?id={{id}}"> Read Post </a></button>
           <br>
-          <p> {{tag}} </p>
+          <span>Tag:
+            {{#each tag}}
+            <a href="/?tag={{this}}"> {{this}} </a> 
+            {{/each}} 
+          </span>
         </div>
         
       </div>
@@ -56,7 +60,9 @@
       <div class="post_card">
           
         {{#if image}}
-          <img src="/images/{{image}}" alt="" width="200" height="200">
+          <div class="imgBlock">
+            <img src="/images/{{image}}"class="img">
+          </div>
         {{else}}
           <img src="https://via.placeholder.com/200x200/258DC8/E0F6FD" alt="">
         {{/if}}
@@ -67,7 +73,11 @@
         <div >
           <button type="button" class="btn btn-secondary"><a href="/readPost?id={{id}}"> Read Post </a></button>
           <br>
-          <span>Tag: <a href="/?tag={{tag}}"> {{tag}} </a> </span> 
+          <span>Tag:
+            {{#each tag}}
+            <a href="/?tag={{this}}"> {{this}} </a> 
+            {{/each}} 
+          </span>
         </div>
       </div>
       {{/each}}

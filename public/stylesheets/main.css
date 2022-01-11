@@ -15,6 +15,7 @@ body {
   body .post_card {
     display: flex;
     width: 220px;
+    height: 430px;
     flex-direction: column;
     background-color: #cdd0d1;
     text-align: center;
@@ -101,3 +102,22 @@ body {
     gap: 10px;
     display: flex;
     flex-direction: column; }
+  body .erDiv {
+    display: block;
+    position: absolute;
+    margin: 350px 247px;
+    background-color: red;
+    width: 20%;
+    border-radius: 5px; }
+  body .errorAdd {
+    color: #000;
+    text-align: center;
+    line-height: center;
+    font-size: 25px; }
+  body .img {
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 300px; }
+  body .imgBlock {
+    overflow: hidden; }

@@ -10,7 +10,8 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const fs = require('fs')
-const initializePassport = require('../passport-config')
+const initializePassport = require('../passport-config');
+const { moveMessagePortToContext } = require('worker_threads');
 const usersBuffer = fs.readFileSync('db/users.json')
 const users = JSON.parse(usersBuffer.toString())
 
@@ -57,10 +58,16 @@ router.get('/', function(req, res, next) {
   })
   const tag = req.query.tag
 
-  let postsTag 
-
   if(tag !=''){
-    postsTag = posts.filter(post => post.tag === tag)
+
+    
+    postsTag = posts.filter(function(post) {
+        for (var i = 0; i < post.tag.length; i++) {
+          if (post.tag[i] == tag) {
+              return post;
+          }
+        }
+    })
   }
   const postsOnPage = 6
 
@@ -85,12 +92,12 @@ router.get('/', function(req, res, next) {
   posts = posts.slice((page-1) * postsOnPage , page * postsOnPage)
   postsT = postsTag.slice((page-1) * postsOnPage , page * postsOnPage)
   if (req.isAuthenticated()) {
-    res.render('index', { user: req.user.name ,posts, postsT, pages, tag})
+    res.render('index', { user: req.user.name, posts, postsT, pages, tag})
   } else {
     res.render('index', { posts, postsT, pages, tag})
   }
   
-  // user: req.user.name ,
+  
   
 })
 
