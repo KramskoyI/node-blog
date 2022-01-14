@@ -10,6 +10,24 @@ const addPostRouter = require('./routes/addPost');
 const readPostRouter = require('./routes/readpost');
 const app = express();
 
+// const MongoClient = require("mongodb").MongoClient;
+// const url = "mongodb://localhost:27017/";
+
+
+// const mongoClient = new MongoClient(url);
+// mongoClient.connect(function(err, client){
+      
+//   const db = client.db("blog");
+//   const users = db.collection("users");
+
+//   if(err) return console.log(err);
+    
+//   users.find().toArray(function(err, results){
+//     console.log(results);
+//     client.close();
+//   });
+// });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views', 'pages'));
 app.set('view engine', 'hbs');
