@@ -2,6 +2,8 @@ if(process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+// получить пользователей и юзать мангус
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
